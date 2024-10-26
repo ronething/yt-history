@@ -1,5 +1,7 @@
 # YouTube History Viewer
 
+<a href="https://www.producthunt.com/posts/yt-history?embed=true&utm_source=badge-featured&utm_medium=badge&utm_souce=badge-yt&#0045;history" target="_blank"><img src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=541313&theme=light" alt="yt&#0045;history - Illuminate&#0032;Your&#0032;Viewing&#0032;Journey | Product Hunt" style="width: 250px; height: 54px;" width="250" height="54" /></a>
+
 This project is a web application that visualizes your YouTube viewing history. It provides insights into your watching patterns, including daily view counts and top watched videos. The application uses Flask for the backend and ECharts for data visualization.
 
 ## Features
