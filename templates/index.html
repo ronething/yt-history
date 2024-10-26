@@ -2,121 +2,153 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Video Watch History</title>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <title>视频观看历史</title>
+    <!-- 替换 Chart.js 为 ECharts -->
+    <script src="https://cdn.jsdelivr.net/npm/echarts@5.4.2/dist/echarts.min.js"></script>
     <style>
         #video-list {
             display: none;
             margin-top: 20px;
         }
+        /* 添加图表容器样式 */
+        .chart-container {
+            width: 800px;
+            height: 400px;
+            margin: 20px auto;
+        }
     </style>
 </head>
 <body>
-    <h1>Video Watch History</h1>
-    
+    <h1>视频观看历史</h1>
 
-    <canvas id="chart-top" width="400" height="200"></canvas>
+    <!-- 修改图表容器 -->
+    <div id="chart-top" class="chart-container"></div>
 
-    <label for="start-date">Start Date:</label>
+    <label for="start-date">开始日期:</label>
     <input type="date" id="start-date">
-    <label for="end-date">End Date:</label>
+    <label for="end-date">结束日期:</label>
     <input type="date" id="end-date">
-    <button id="filter-button">Filter</button>
+    <button id="filter-button">筛选</button>
 
-    <canvas id="chart-daily" width="400" height="200"></canvas>
+    <!-- 修改图表容器 -->
+    <div id="chart-daily" class="chart-container"></div>
     <div id="video-list">
-        <h2>Videos Watched on <span id="selected-date"></span></h2>
+        <h2>在 <span id="selected-date"></span> 观看的视频</h2>
         <ul id="video-list-items"></ul>
     </div>
-    
 
     <script>
         document.addEventListener('DOMContentLoaded', async function() {
-            // Fetch data from the API
+            // 获取数据
             const videoDataResponse = await fetch('/api/video-data');
             const videoData = await videoDataResponse.json();
 
             const dailyDataResponse = await fetch('/api/daily-views');
             const dailyData = await dailyDataResponse.json();
+
+            const topVideosResponse = await fetch('/api/top-videos');
+            const topVideos = await topVideosResponse.json();
+
+            // 准备数据
             let dailyLabels = dailyData.map(item => item.time);
             let dailyCounts = dailyData.map(item => item.count);
+            let topLabels = topVideos.map(item => item.title);
+            let topCounts = topVideos.map(item => item.count);
 
-            // Render the daily chart
-            const ctxDaily = document.getElementById('chart-daily').getContext('2d');
-            const dailyChart = new Chart(ctxDaily, {
-                type: 'line',
-                data: {
-                    labels: dailyLabels,
-                    datasets: [{
-                        label: 'Daily Views',
-                        data: dailyCounts,
-                        borderColor: 'rgba(75, 192, 192, 1)',
-                        borderWidth: 1
+            // 初始化 ECharts 实例
+            const dailyChart = echarts.init(document.getElementById('chart-daily'));
+            const topChart = echarts.init(document.getElementById('chart-top'));
+
+            // 渲染每日观看图表
+            function renderDailyChart(labels, counts) {
+                dailyChart.setOption({
+                    title: {
+                        text: '每日观看量'
+                    },
+                    tooltip: {
+                        trigger: 'axis'
+                    },
+                    xAxis: {
+                        type: 'category',
+                        data: labels
+                    },
+                    yAxis: {
+                        type: 'value'
+                    },
+                    series: [{
+                        data: counts,
+                        type: 'line'
                     }]
-                },
-                options: {
-                    onClick: function(event, elements) {
-                        console.log('onClick', event, elements);
-                        console.log(elements.length);
-                        if (elements.length > 0) {
-                            const index = elements[0].index;
-                            const date = dailyLabels[index];
-                            const videos = videoData.filter(video => {
-                                const videoDate = new Date(video.time).toISOString().split('T')[0]; // Convert to 'YYYY-MM-DD' format
-                                return videoDate === date;
-                            });
-                            
-                            const videoList = document.getElementById('video-list-items');
-                            videoList.innerHTML = '';
-                            videos.forEach(video => {
-                                const li = document.createElement('li');
-                                const a = document.createElement('a');
-                                a.textContent = video.title;
-                                a.href = video.url; // Assuming video.url contains the link to the video
-                                a.target = '_blank'; // Open link in a new tab
-                                li.appendChild(a);
-                                videoList.appendChild(li);
-                            });
-                            
-                            document.getElementById('selected-date').textContent = date;
-                            document.getElementById('video-list').style.display = 'block';
+                });
+            }
+
+            // 渲染热门视频图表
+            function renderTopChart(labels, counts) {
+                topChart.setOption({
+                    title: {
+                        text: '热门视频'
+                    },
+                    tooltip: {
+                        trigger: 'axis',
+                        axisPointer: {
+                            type: 'shadow'
                         }
-                    }
-                }
-            });
-
-            // Fetch and render top videos chart data
-            const topDataResponse = await fetch('/api/top-videos');
-            const topData = await topDataResponse.json();
-            const topLabels = topData.map(item => item.title);
-            const topCounts = topData.map(item => item.count);
-
-            const ctxTop = document.getElementById('chart-top').getContext('2d');
-            const topChart = new Chart(ctxTop, {
-                type: 'bar',
-                data: {
-                    labels: topLabels,
-                    datasets: [{
-                        label: 'Top Videos',
-                        data: topCounts,
-                        backgroundColor: 'rgba(153, 102, 255, 0.2)',
-                        borderColor: 'rgba(153, 102, 255, 1)',
-                        borderWidth: 1
+                    },
+                    xAxis: {
+                        type: 'category',
+                        data: labels,
+                        axisLabel: {
+                            interval: 0,
+                            rotate: 45
+                        }
+                    },
+                    yAxis: {
+                        type: 'value'
+                    },
+                    series: [{
+                        data: counts,
+                        type: 'bar'
                     }]
-                }
+                });
+            }
+
+            // 初始渲染图表
+            renderDailyChart(dailyLabels, dailyCounts);
+            renderTopChart(topLabels, topCounts);
+
+            // 添加点击事件处理
+            dailyChart.on('click', function(params) {
+                const date = params.name;
+                const videos = videoData.filter(video => {
+                    const videoDate = new Date(video.time).toISOString().split('T')[0];
+                    return videoDate === date;
+                });
+                
+                const videoList = document.getElementById('video-list-items');
+                videoList.innerHTML = '';
+                videos.forEach(video => {
+                    const li = document.createElement('li');
+                    const a = document.createElement('a');
+                    a.textContent = video.title;
+                    a.href = video.url; // Assuming video.url contains the link to the video
+                    a.target = '_blank'; // Open link in a new tab
+                    li.appendChild(a);
+                    videoList.appendChild(li);
+                });
+                
+                document.getElementById('selected-date').textContent = date;
+                document.getElementById('video-list').style.display = 'block';
             });
 
-            // Filter button event
+            // 筛选按钮事件处理
             document.getElementById('filter-button').addEventListener('click', function() {
                 const startDate = document.getElementById('start-date').value;
                 const endDate = document.getElementById('end-date').value;
 
                 let filteredData;
                 if (!startDate && !endDate) {
-                    // If both start and end dates are empty, show all data
                     filteredData = dailyData;
                 } else {
-                    // Filter data based on date range
                     filteredData = dailyData.filter(item => {
                         return item.time >= startDate && item.time <= endDate;
                     });
@@ -125,9 +157,7 @@
                 dailyLabels = filteredData.map(item => item.time);
                 dailyCounts = filteredData.map(item => item.count);
 
-                dailyChart.data.labels = dailyLabels;
-                dailyChart.data.datasets[0].data = dailyCounts;
-                dailyChart.update();
+                renderDailyChart(dailyLabels, dailyCounts);
             });
         });
     </script>
