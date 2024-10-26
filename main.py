@@ -42,7 +42,6 @@ def video_data():
     df = load_and_process_data('watch-history.json')
     return jsonify(df.to_dict(orient='records'))
 
-# New route to serve the frontend page
 @app.route('/')
 def serve_frontend():
     return send_from_directory('templates', 'index.html')

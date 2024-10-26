@@ -2,15 +2,13 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>视频观看历史</title>
-    <!-- 替换 Chart.js 为 ECharts -->
+    <title>Video Viewing History</title>
     <script src="https://cdn.jsdelivr.net/npm/echarts@5.4.2/dist/echarts.min.js"></script>
     <style>
         #video-list {
             display: none;
             margin-top: 20px;
         }
-        /* 添加图表容器样式 */
         .chart-container {
             width: 800px;
             height: 400px;
@@ -19,27 +17,24 @@
     </style>
 </head>
 <body>
-    <h1>视频观看历史</h1>
+    <h1>Video Viewing History</h1>
 
-    <!-- 修改图表容器 -->
     <div id="chart-top" class="chart-container"></div>
 
-    <label for="start-date">开始日期:</label>
+    <label for="start-date">Start Date:</label>
     <input type="date" id="start-date">
-    <label for="end-date">结束日期:</label>
+    <label for="end-date">End Date:</label>
     <input type="date" id="end-date">
-    <button id="filter-button">筛选</button>
+    <button id="filter-button">Filter</button>
 
-    <!-- 修改图表容器 -->
     <div id="chart-daily" class="chart-container"></div>
     <div id="video-list">
-        <h2>在 <span id="selected-date"></span> 观看的视频</h2>
+        <h2>Videos watched on <span id="selected-date"></span></h2>
         <ul id="video-list-items"></ul>
     </div>
 
     <script>
         document.addEventListener('DOMContentLoaded', async function() {
-            // 获取数据
             const videoDataResponse = await fetch('/api/video-data');
             const videoData = await videoDataResponse.json();
 
@@ -49,74 +44,44 @@
             const topVideosResponse = await fetch('/api/top-videos');
             const topVideos = await topVideosResponse.json();
 
-            // 准备数据
             let dailyLabels = dailyData.map(item => item.time);
             let dailyCounts = dailyData.map(item => item.count);
             let topLabels = topVideos.map(item => item.title);
             let topCounts = topVideos.map(item => item.count);
 
-            // 初始化 ECharts 实例
             const dailyChart = echarts.init(document.getElementById('chart-daily'));
             const topChart = echarts.init(document.getElementById('chart-top'));
 
-            // 渲染每日观看图表
             function renderDailyChart(labels, counts) {
                 dailyChart.setOption({
-                    title: {
-                        text: '每日观看量'
-                    },
-                    tooltip: {
-                        trigger: 'axis'
-                    },
-                    xAxis: {
-                        type: 'category',
-                        data: labels
-                    },
-                    yAxis: {
-                        type: 'value'
-                    },
-                    series: [{
-                        data: counts,
-                        type: 'line'
-                    }]
+                    title: { text: 'Daily Views' },
+                    tooltip: { trigger: 'axis' },
+                    xAxis: { type: 'category', data: labels },
+                    yAxis: { type: 'value' },
+                    series: [{ data: counts, type: 'line' }]
                 });
             }
 
-            // 渲染热门视频图表
             function renderTopChart(labels, counts) {
                 topChart.setOption({
-                    title: {
-                        text: '热门视频'
-                    },
+                    title: { text: 'Popular Videos' },
                     tooltip: {
                         trigger: 'axis',
-                        axisPointer: {
-                            type: 'shadow'
-                        }
+                        axisPointer: { type: 'shadow' }
                     },
                     xAxis: {
                         type: 'category',
                         data: labels,
-                        axisLabel: {
-                            interval: 0,
-                            rotate: 45
-                        }
+                        axisLabel: { interval: 0, rotate: 45 }
                     },
-                    yAxis: {
-                        type: 'value'
-                    },
-                    series: [{
-                        data: counts,
-                        type: 'bar'
-                    }]
+                    yAxis: { type: 'value' },
+                    series: [{ data: counts, type: 'bar' }]
                 });
             }
 
-            // 初始渲染图表
             renderDailyChart(dailyLabels, dailyCounts);
             renderTopChart(topLabels, topCounts);
 
-            // 添加点击事件处理
             dailyChart.on('click', function(params) {
                 const date = params.name;
                 const videos = videoData.filter(video => {
@@ -130,8 +95,8 @@
                     const li = document.createElement('li');
                     const a = document.createElement('a');
                     a.textContent = video.title;
-                    a.href = video.url; // Assuming video.url contains the link to the video
-                    a.target = '_blank'; // Open link in a new tab
+                    a.href = video.url;
+                    a.target = '_blank';
                     li.appendChild(a);
                     videoList.appendChild(li);
                 });
@@ -140,7 +105,6 @@
                 document.getElementById('video-list').style.display = 'block';
             });
 
-            // 筛选按钮事件处理
             document.getElementById('filter-button').addEventListener('click', function() {
                 const startDate = document.getElementById('start-date').value;
                 const endDate = document.getElementById('end-date').value;
