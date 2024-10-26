@@ -14,7 +14,8 @@ def load_and_process_data(file_path):
     processed_data = []
     for item in data:
         if 'titleUrl' in item:
-            title = item['title'].replace('Watched ', '')  # 去除 "Watched" 前缀
+            # remove "Watched " prefix
+            title = item['title'].replace('Watched ', '')
             processed_data.append({
                 'title': title,
                 'time': parser.parse(item['time']),
