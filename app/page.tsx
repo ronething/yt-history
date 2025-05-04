@@ -1,9 +1,34 @@
 import Link from "next/link"
 import { ArrowRight, BarChart2, Clock, Upload } from "lucide-react"
+import { Metadata } from "next"
 
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import FileUploadForm from "@/components/file-upload-form"
+
+export const metadata: Metadata = {
+  title: "YouTube History Visualizer | Analyze Your Viewing Habits",
+  description: "Upload your YouTube watch history and get personalized insights into your viewing patterns. No login required, your data never leaves your browser.",
+  openGraph: {
+    type: "website",
+    url: "https://youtubestats.forgetimer.com/",
+    title: "YouTube History Visualizer | Analyze Your Viewing Habits",
+    description: "Upload your YouTube watch history and get personalized insights into your viewing patterns. No login required, your data never leaves your browser.",
+    siteName: "YouTube History Visualizer",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "YouTube History Visualizer | Analyze Your Viewing Habits",
+    description: "Upload your YouTube watch history and get personalized insights into your viewing patterns. No login required, your data never leaves your browser.",
+  },
+  alternates: {
+    canonical: "https://youtubestats.forgetimer.com/",
+  },
+  robots: {
+    index: true,
+    follow: true,
+  },
+}
 
 export default function Home() {
   return (
