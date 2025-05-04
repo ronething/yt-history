@@ -1,0 +1,13 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+1. use pnpm as package manager, not npm
+2. don't request npm run dev in agent mode, i will do it by myself
+3. Ignore lint errors from npm package imports in code, sometimes they're just due to local caching issues.
+4. If there's an error, please use your brain and don't just randomly change the code. Carefully investigate the problem. You can start by looking at what the error actually is before modifying the code. Don't be a smart aleck.
+5. don't repeat yourself, less is more.
+6. always write code and code comment in english format style.
+7. When creating database tables, do not use foreign keys; logical associations can be made at the code level.
+8. Don't recreate pages with existing functionality.  Always check the code repository first to see if a corresponding file or page already exists.

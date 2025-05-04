@@ -1,65 +1,30 @@
-# YouTube History Viewer
+# Youtube data viewer
 
-<a href="https://www.producthunt.com/posts/yt-history?embed=true&utm_source=badge-featured&utm_medium=badge&utm_souce=badge-yt&#0045;history" target="_blank"><img src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=541313&theme=light" alt="yt&#0045;history - Illuminate&#0032;Your&#0032;Viewing&#0032;Journey | Product Hunt" style="width: 250px; height: 54px;" width="250" height="54" /></a>
+*Automatically synced with your [v0.dev](https://v0.dev) deployments*
 
-This project is a web application that visualizes your YouTube viewing history. It provides insights into your watching patterns, including daily view counts and top watched videos. The application uses Flask for the backend and ECharts for data visualization.
+[![Deployed on Vercel](https://img.shields.io/badge/Deployed%20on-Vercel-black?style=for-the-badge&logo=vercel)](https://vercel.com/ronethings-projects/v0-youtube-data-viewer)
+[![Built with v0](https://img.shields.io/badge/Built%20with-v0.dev-black?style=for-the-badge)](https://v0.dev/chat/projects/vNnIA6CcK3u)
 
-## Features
-- Daily view count chart
-- Top watched videos chart
-- Detailed list of videos watched on a selected date
-- Date range filtering
+## Overview
 
-## How to Export YouTube History from Google Takeout
+This repository will stay in sync with your deployed chats on [v0.dev](https://v0.dev).
+Any changes you make to your deployed app will be automatically pushed to this repository from [v0.dev](https://v0.dev).
 
-To obtain your YouTube viewing history data, follow these steps:
+## Deployment
 
-1. Visit [Google Takeout](https://takeout.google.com/).
+Your project is live at:
 
-2. Ensure you're logged into the Google account containing your YouTube history.
+**[https://vercel.com/ronethings-projects/v0-youtube-data-viewer](https://vercel.com/ronethings-projects/v0-youtube-data-viewer)**
 
-3. In the product list, deselect all items, then select only "YouTube and YouTube Music".
+## Build your app
 
-4. Click the "All YouTube data included" button next to "YouTube and YouTube Music".
+Continue building your app on:
 
-5. In the pop-up options, deselect all items, keeping only "history" checked.
+**[https://v0.dev/chat/projects/vNnIA6CcK3u](https://v0.dev/chat/projects/vNnIA6CcK3u)**
 
-6. Click "OK", then scroll to the bottom of the page and click "Next step".
+## How It Works
 
-7. Choose your preferred export frequency, file type, and size. For a one-time export, keep the default settings.
-
-8. Click "Create export".
-
-9. Wait for Google to prepare your data. This may take anywhere from a few minutes to several hours, depending on the amount of data.
-
-10. Once ready, you'll receive an email. Click the download link in the email.
-
-11. Download and unzip the file.
-
-12. In the extracted folder, locate the `Takeout/YouTube and YouTube Music/history/watch-history.json` file.
-
-13. Copy the `watch-history.json` file to the root directory of this project.
-
-Now that you've successfully exported and prepared your YouTube viewing history data, you can proceed to run the application to visualize your viewing history.
-
-
-## How to Run
-
-1. Ensure you have Python 3.x installed.
-2. Clone this repository.
-3. Install the required dependencies:
-   ```
-   pdm install
-   ```
-4. Place your YouTube watch history JSON file (named `watch-history.json`) in the project root directory.
-5. Run the Flask application:
-   ```
-   python main.py
-   ```
-6. Open a web browser and navigate to `http://localhost:5000` to view your YouTube history visualization.
-
-# Effect
-
-![readme](img/readme.png)
-
-<a href="https://www.buymeacoffee.com/ronething" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Buy Me A Coffee" style="height: 60px !important;width: 217px !important;" ></a>
+1. Create and modify your project using [v0.dev](https://v0.dev)
+2. Deploy your chats from the v0 interface
+3. Changes are automatically pushed to this repository
+4. Vercel deploys the latest version from this repository
