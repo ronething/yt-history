@@ -1,5 +1,7 @@
 # YouTube History Analyzer
 
+<a href="https://www.producthunt.com/posts/yt-history?embed=true&utm_source=badge-featured&utm_medium=badge&utm_souce=badge-yt&#0045;history" target="_blank"><img src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=541313&theme=light" alt="yt&#0045;history - Illuminate&#0032;Your&#0032;Viewing&#0032;Journey | Product Hunt" style="width: 250px; height: 54px;" width="250" height="54" /></a>
+
 A web application that allows users to visualize and analyze their YouTube watch history.
 
 ## Features
@@ -36,3 +38,9 @@ pnpm dev
 - Styling: Tailwind CSS
 - Data Visualization: Recharts
 - State Management: React Context API
+
+## Effect
+
+![youtube-history](images/readme.webp)
+
+<a href="https://www.buymeacoffee.com/ronething" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Buy Me A Coffee" style="height: 60px !important;width: 217px !important;" ></a>
