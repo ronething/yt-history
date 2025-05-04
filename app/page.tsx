@@ -323,6 +323,9 @@ export default function Home() {
           <p className="text-center text-sm leading-loose text-gray-500 md:text-left">
             © {new Date().getFullYear()} YouTube History Visualizer. All rights reserved.
           </p>
+          <p className="text-center text-sm leading-loose text-gray-500 md:text-left">
+            Made with ❤️ by <a href="https://forgetimer.com" target="_blank" className="text-primary hover:underline">Forgetimer</a>
+          </p>
           <div className="flex items-center gap-4">
             <Link href="/privacy" className="text-sm text-gray-500 hover:underline">
               Privacy Policy
