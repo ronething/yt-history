@@ -1,7 +1,25 @@
 import Link from "next/link"
 import { ArrowLeft } from "lucide-react"
+import { Metadata } from "next"
 
 import { Button } from "@/components/ui/button"
+
+export const metadata: Metadata = {
+  title: "Privacy Policy | YouTube History Visualizer",
+  description: "Privacy policy and data handling practices for the YouTube History Visualizer tool.",
+  openGraph: {
+    title: "Privacy Policy | YouTube History Visualizer",
+    description: "Privacy policy and data handling practices for the YouTube History Visualizer tool.",
+    url: "https://youtubestats.forgetimer.com/privacy",
+  },
+  twitter: {
+    title: "Privacy Policy | YouTube History Visualizer",
+    description: "Privacy policy and data handling practices for the YouTube History Visualizer tool.",
+  },
+  alternates: {
+    canonical: "https://youtubestats.forgetimer.com/privacy",
+  },
+}
 
 export default function PrivacyPolicy() {
   return (
