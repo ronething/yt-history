@@ -34,5 +34,5 @@ pnpm dev
 
 - Frontend: React/Next.js
 - Styling: Tailwind CSS
-- Data Visualization: D3.js/Chart.js
+- Data Visualization: Recharts
 - State Management: React Context API
