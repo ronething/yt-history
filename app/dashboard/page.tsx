@@ -3,6 +3,8 @@
 import { useEffect, useState } from "react"
 import { useRouter } from "next/navigation"
 import { ArrowLeft, Calendar, Clock, Film, User } from "lucide-react"
+import { Metadata } from "next"
+import Head from "next/head"
 
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
@@ -131,6 +133,11 @@ export default function DashboardPage() {
 
   return (
     <div className="flex flex-col min-h-screen">
+      <Head>
+        <title>Dashboard | YouTube History Visualizer</title>
+        <meta name="description" content="View insights and analytics from your YouTube watch history data." />
+        <link rel="canonical" href="https://youtubestats.forgetimer.com/dashboard" />
+      </Head>
       <header className="border-b">
         <div className="container mx-auto flex h-16 items-center px-4 sm:px-6 lg:px-8">
           <Button variant="ghost" size="icon" onClick={handleBackToHome}>
