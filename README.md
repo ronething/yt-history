@@ -1,30 +1,38 @@
-# Youtube data viewer
+# YouTube History Analyzer
 
-*Automatically synced with your [v0.dev](https://v0.dev) deployments*
+A web application that allows users to visualize and analyze their YouTube watch history.
 
-[![Deployed on Vercel](https://img.shields.io/badge/Deployed%20on-Vercel-black?style=for-the-badge&logo=vercel)](https://vercel.com/ronethings-projects/v0-youtube-data-viewer)
-[![Built with v0](https://img.shields.io/badge/Built%20with-v0.dev-black?style=for-the-badge)](https://v0.dev/chat/projects/vNnIA6CcK3u)
+## Features
 
-## Overview
+- Import YouTube history data from Google Takeout
+- Visualize watching patterns and trends
+- Filter and search through watch history
+- Generate insights about most-watched channels and categories
+- Track time spent watching different types of content
 
-This repository will stay in sync with your deployed chats on [v0.dev](https://v0.dev).
-Any changes you make to your deployed app will be automatically pushed to this repository from [v0.dev](https://v0.dev).
+## Installation
 
-## Deployment
+```bash
+# Clone the repository
+git clone https://github.com/ronething/yt-history.git
+cd yt-history
 
-Your project is live at:
+# Install dependencies
+pnpm install
 
-**[https://vercel.com/ronethings-projects/v0-youtube-data-viewer](https://vercel.com/ronethings-projects/v0-youtube-data-viewer)**
+# Start the development server
+pnpm dev
+```
 
-## Build your app
+## Usage
 
-Continue building your app on:
+1. Export your YouTube history data from [Google Takeout](https://takeout.google.com/)
+2. Import the JSON file into the application
+3. Explore your personalized YouTube analytics dashboard
 
-**[https://v0.dev/chat/projects/vNnIA6CcK3u](https://v0.dev/chat/projects/vNnIA6CcK3u)**
+## Technologies
 
-## How It Works
-
-1. Create and modify your project using [v0.dev](https://v0.dev)
-2. Deploy your chats from the v0 interface
-3. Changes are automatically pushed to this repository
-4. Vercel deploys the latest version from this repository
+- Frontend: React/Next.js
+- Styling: Tailwind CSS
+- Data Visualization: D3.js/Chart.js
+- State Management: React Context API
