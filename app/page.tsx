@@ -338,7 +338,7 @@ export default function Home() {
             <Link href="/terms" className="text-sm text-gray-500 hover:underline">
               Terms of Service
             </Link>
-            <Link href="https://github.com/ronething/yt-history" target="_blank" className="text-sm text-gray-500 hover:underline">
+            <Link href="https://github.com/ronething/yt-history" target="_blank" rel="noopener noreferrer" className="text-sm text-gray-500 hover:underline">
               GitHub
             </Link>
           </div>
