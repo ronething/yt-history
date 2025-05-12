@@ -1,5 +1,5 @@
 import Link from "next/link"
-import { ArrowRight, BarChart2, Clock, Upload } from "lucide-react"
+import { ArrowRight, BarChart2, Clock, Star, Upload } from "lucide-react"
 import { Metadata } from "next"
 
 import { Button } from "@/components/ui/button"
@@ -70,6 +70,11 @@ export default function Home() {
                       className="inline-flex h-10 items-center justify-center rounded-md border border-input bg-background px-8 text-sm font-medium shadow-sm transition-colors hover:bg-accent hover:text-accent-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50"
                     >
                       How to Export Data
+                    </Link>
+                  </Button>
+                  <Button className="inline-flex h-10 items-center justify-center rounded-md bg-primary px-8 text-sm font-medium text-primary-foreground shadow transition-colors hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50">
+                    <Link href="https://github.com/ronething/yt-history" target="_blank" rel="noopener noreferrer" className="flex items-center gap-1">
+                      <Star className="h-4 w-4" /> Star on GitHub
                     </Link>
                   </Button>
                 </div>
@@ -332,6 +337,9 @@ export default function Home() {
             </Link>
             <Link href="/terms" className="text-sm text-gray-500 hover:underline">
               Terms of Service
+            </Link>
+            <Link href="https://github.com/ronething/yt-history" target="_blank" rel="noopener noreferrer" className="text-sm text-gray-500 hover:underline">
+              GitHub
             </Link>
           </div>
         </div>
