@@ -17,16 +17,12 @@ export default function RootLayout({
     <html lang="en">
       <head>
         <Script
-          src="https://www.googletagmanager.com/gtag/js?id=G-GES4BJ9BFB"
-          strategy="afterInteractive"
+          defer
+          data-domain="youtubestats.forgetimer.com"
+          src="https://plausible.vibecodinghub.org/js/script.file-downloads.outbound-links.js"
         />
-        <Script id="google-analytics" strategy="afterInteractive">
-          {`
-            window.dataLayer = window.dataLayer || [];
-            function gtag(){dataLayer.push(arguments);}
-            gtag('js', new Date());
-            gtag('config', 'G-GES4BJ9BFB');
-          `}
+        <Script id="plausible-custom">
+          {`window.plausible = window.plausible || function() { (window.plausible.q = window.plausible.q || []).push(arguments) }`}
         </Script>
       </head>
       <body>{children}</body>
