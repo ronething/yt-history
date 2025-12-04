@@ -4,7 +4,6 @@ import {
   FacebookShareButton,
   TwitterShareButton,
   WhatsappShareButton,
-  RedditShareButton,
   FacebookIcon,
   XIcon,
   WhatsappIcon,
@@ -13,6 +12,24 @@ import {
 
 const SHARE_URL = "https://youtubestats.forgetimer.com"
 const SHARE_TITLE = "Check out this awesome YouTube History Visualizer! Analyze your YouTube watching habits with beautiful charts and insights."
+
+// Custom Reddit share button since react-share uses wrong URL (web/submit instead of reddit.com/submit)
+function CustomRedditShareButton({ url, title, children }: { url: string; title: string; children: React.ReactNode }) {
+  const handleClick = () => {
+    const redditUrl = `https://www.reddit.com/submit?url=${encodeURIComponent(url)}&title=${encodeURIComponent(title)}`
+    window.open(redditUrl, "_blank", "noopener,noreferrer,width=600,height=600")
+  }
+
+  return (
+    <button
+      onClick={handleClick}
+      className="transition-transform hover:scale-110 cursor-pointer"
+      aria-label="Share on Reddit"
+    >
+      {children}
+    </button>
+  )
+}
 
 export default function SocialShare() {
   return (
@@ -36,9 +53,9 @@ export default function SocialShare() {
           <WhatsappIcon size={40} round />
         </WhatsappShareButton>
 
-        <RedditShareButton url={SHARE_URL} title={SHARE_TITLE} className="transition-transform hover:scale-110">
+        <CustomRedditShareButton url={SHARE_URL} title={SHARE_TITLE}>
           <RedditIcon size={40} round />
-        </RedditShareButton>
+        </CustomRedditShareButton>
       </div>
     </div>
   )
