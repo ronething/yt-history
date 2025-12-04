@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react"
 import { useRouter } from "next/navigation"
-import { ArrowLeft, Calendar, Clock, Film, Users, Download, Share2 } from "lucide-react"
+import { ArrowLeft, Calendar, Clock, Film, Users } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
@@ -12,6 +12,7 @@ import TopVideosChart from "@/components/dashboard/top-videos-chart"
 import ViewingTimeChart from "@/components/dashboard/viewing-time-chart"
 import ChannelDistributionChart from "@/components/dashboard/channel-distribution-chart"
 import StatsOverview from "@/components/dashboard/stats-overview"
+import SocialShare from "@/components/dashboard/social-share"
 
 // Define interfaces for the processed data
 interface Stats {
@@ -285,6 +286,15 @@ export default function DashboardPage() {
                 </Card>
               </TabsContent>
             </Tabs>
+          </section>
+
+          {/* Social Share */}
+          <section className="animate-fade-in stagger-3">
+            <Card className="border-0 shadow-lg bg-card/50 backdrop-blur">
+              <CardContent className="pt-6">
+                <SocialShare />
+              </CardContent>
+            </Card>
           </section>
         </div>
       </main>
