@@ -12,6 +12,21 @@ interface DailyViewsChartProps {
   dailyViews: DailyView[]
 }
 
+const CustomTooltip = ({ active, payload, label }: any) => {
+  if (active && payload && payload.length) {
+    return (
+      <div className="bg-card/95 backdrop-blur border border-border rounded-xl p-4 shadow-xl">
+        <p className="text-sm text-muted-foreground mb-1">{label}</p>
+        <p className="text-2xl font-bold bg-gradient-to-r from-red-500 to-orange-500 bg-clip-text text-transparent">
+          {payload[0].value.toLocaleString()}
+        </p>
+        <p className="text-xs text-muted-foreground">videos watched</p>
+      </div>
+    )
+  }
+  return null
+}
+
 export default function DailyViewsChart({ dailyViews }: DailyViewsChartProps) {
   const chartData = useMemo(() => {
     // Fill in missing dates with zero counts
@@ -94,7 +109,12 @@ export default function DailyViewsChart({ dailyViews }: DailyViewsChartProps) {
   if (displayData.length === 0) {
     return (
       <div className="flex items-center justify-center h-64">
-        <p className="text-muted-foreground">No data available</p>
+        <div className="text-center space-y-2">
+          <div className="w-12 h-12 mx-auto rounded-full bg-muted flex items-center justify-center">
+            <span className="text-2xl">📊</span>
+          </div>
+          <p className="text-muted-foreground">No data available</p>
+        </div>
       </div>
     )
   }
@@ -102,21 +122,41 @@ export default function DailyViewsChart({ dailyViews }: DailyViewsChartProps) {
   return (
     <div className="h-[400px] w-full">
       <ResponsiveContainer width="100%" height="100%">
-        <AreaChart data={displayData} margin={{ top: 10, right: 30, left: 0, bottom: 0 }}>
+        <AreaChart data={displayData} margin={{ top: 10, right: 10, left: -10, bottom: 0 }}>
           <defs>
-            <linearGradient id="colorCount" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="5%" stopColor="#8884d8" stopOpacity={0.8} />
-              <stop offset="95%" stopColor="#8884d8" stopOpacity={0} />
+            <linearGradient id="colorGradient" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stopColor="#ef4444" stopOpacity={0.4} />
+              <stop offset="50%" stopColor="#f97316" stopOpacity={0.2} />
+              <stop offset="100%" stopColor="#f97316" stopOpacity={0} />
+            </linearGradient>
+            <linearGradient id="strokeGradient" x1="0" y1="0" x2="1" y2="0">
+              <stop offset="0%" stopColor="#ef4444" />
+              <stop offset="100%" stopColor="#f97316" />
             </linearGradient>
           </defs>
-          <CartesianGrid strokeDasharray="3 3" vertical={false} />
-          <XAxis dataKey="formattedDate" tick={{ fontSize: 12 }} interval={Math.ceil(displayData.length / 12)} />
-          <YAxis tick={{ fontSize: 12 }} tickFormatter={(value) => value.toLocaleString()} />
-          <Tooltip
-            formatter={(value: number) => [value.toLocaleString(), "Videos Watched"]}
-            labelFormatter={(label) => `Date: ${label}`}
+          <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="hsl(var(--border))" opacity={0.5} />
+          <XAxis 
+            dataKey="formattedDate" 
+            tick={{ fontSize: 11, fill: 'hsl(var(--muted-foreground))' }} 
+            interval={Math.ceil(displayData.length / 10)}
+            tickLine={false}
+            axisLine={{ stroke: 'hsl(var(--border))' }}
           />
-          <Area type="monotone" dataKey="count" stroke="#8884d8" fillOpacity={1} fill="url(#colorCount)" />
+          <YAxis 
+            tick={{ fontSize: 11, fill: 'hsl(var(--muted-foreground))' }} 
+            tickFormatter={(value) => value.toLocaleString()}
+            tickLine={false}
+            axisLine={false}
+          />
+          <Tooltip content={<CustomTooltip />} />
+          <Area 
+            type="monotone" 
+            dataKey="count" 
+            stroke="url(#strokeGradient)" 
+            strokeWidth={2}
+            fillOpacity={1} 
+            fill="url(#colorGradient)" 
+          />
         </AreaChart>
       </ResponsiveContainer>
     </div>
