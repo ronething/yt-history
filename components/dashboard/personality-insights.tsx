@@ -26,38 +26,30 @@ export default function PersonalityInsights({ advancedStats }: PersonalityInsigh
     if (nightOwlScore > 40) {
       return {
         title: "Night Owl",
-        titleZh: "夜猫子",
         icon: Moon,
         gradient: "from-blue-500 to-indigo-600",
-        description: `You're a creature of the night! ${nightOwlScore}% of your viewing happens after 10 PM.`,
-        descriptionZh: `你是夜晚的主人！${nightOwlScore}% 的观看发生在晚上 10 点后。`
+        description: `You're a creature of the night! ${nightOwlScore}% of your viewing happens after 10 PM.`
       }
     } else if (earlyBirdScore > 30) {
       return {
         title: "Early Bird",
-        titleZh: "早起鸟",
         icon: Sun,
         gradient: "from-orange-500 to-yellow-500",
-        description: `You catch the worm! ${earlyBirdScore}% of your watching is in the early morning.`,
-        descriptionZh: `早起的鸟儿有虫吃！${earlyBirdScore}% 的观看在清晨时分。`
+        description: `You catch the worm! ${earlyBirdScore}% of your watching is in the early morning.`
       }
     } else if (middayScore > 25) {
       return {
         title: "Midday Watcher",
-        titleZh: "午休党",
         icon: Coffee,
         gradient: "from-amber-500 to-orange-500",
-        description: `Lunch break binge-watcher! ${middayScore}% during noon hours.`,
-        descriptionZh: `午休时光的狂热粉！${middayScore}% 的观看在午间。`
+        description: `Lunch break binge-watcher! ${middayScore}% during noon hours.`
       }
     } else {
       return {
         title: "Balanced Viewer",
-        titleZh: "均衡观看者",
         icon: TrendingUp,
         gradient: "from-green-500 to-teal-500",
-        description: "You watch evenly throughout the day.",
-        descriptionZh: "你的观看时间分布均衡。"
+        description: "You watch evenly throughout the day."
       }
     }
   }
@@ -68,29 +60,23 @@ export default function PersonalityInsights({ advancedStats }: PersonalityInsigh
     if (dailyAverage > 15) {
       return {
         title: "Super Fan",
-        titleZh: "狂热粉",
         icon: Flame,
         gradient: "from-red-500 to-orange-500",
-        description: `Hardcore viewer! Averaging ${dailyAverage} videos per day.`,
-        descriptionZh: `硬核观众！日均观看 ${dailyAverage} 个视频。`
+        description: `Hardcore viewer! Averaging ${dailyAverage} videos per day.`
       }
     } else if (dailyAverage > 5) {
       return {
         title: "Regular Viewer",
-        titleZh: "常规观众",
         icon: Heart,
         gradient: "from-pink-500 to-rose-500",
-        description: `Consistent watcher with ${dailyAverage} videos daily.`,
-        descriptionZh: `稳定观看，日均 ${dailyAverage} 个视频。`
+        description: `Consistent watcher with ${dailyAverage} videos daily.`
       }
     } else {
       return {
         title: "Casual Browser",
-        titleZh: "随缘看",
         icon: Compass,
         gradient: "from-gray-500 to-slate-500",
-        description: `Selective viewer at ${dailyAverage} videos per day.`,
-        descriptionZh: `精选观看，日均 ${dailyAverage} 个视频。`
+        description: `Selective viewer at ${dailyAverage} videos per day.`
       }
     }
   }
@@ -101,29 +87,23 @@ export default function PersonalityInsights({ advancedStats }: PersonalityInsigh
     if (topChannelPercentage > 30) {
       return {
         title: "Loyal Fan",
-        titleZh: "死忠粉",
         icon: Heart,
         gradient: "from-purple-500 to-pink-500",
-        description: `${topChannelPercentage}% of your views go to your favorite channel!`,
-        descriptionZh: `${topChannelPercentage}% 的观看献给最爱频道！`
+        description: `${topChannelPercentage}% of your views go to your favorite channel!`
       }
     } else if (channelDiversity > 0.6) {
       return {
         title: "Content Explorer",
-        titleZh: "探索者",
         icon: Compass,
         gradient: "from-teal-500 to-cyan-500",
-        description: "You love exploring diverse content across many channels.",
-        descriptionZh: "你喜欢探索各种不同频道的内容。"
+        description: "You love exploring diverse content across many channels."
       }
     } else {
       return {
         title: "Balanced Explorer",
-        titleZh: "平衡探索者",
         icon: TrendingUp,
         gradient: "from-blue-500 to-purple-500",
-        description: "You balance between favorites and new discoveries.",
-        descriptionZh: "你在最爱和新发现之间保持平衡。"
+        description: "You balance between favorites and new discoveries."
       }
     }
   }
@@ -157,15 +137,14 @@ export default function PersonalityInsights({ advancedStats }: PersonalityInsigh
                 <Icon className="w-6 h-6 text-white" />
               </div>
               <div>
-                <CardTitle className="text-lg">{personality.titleZh}</CardTitle>
-                <CardDescription className="text-xs">{personality.title}</CardDescription>
+                <CardTitle className="text-lg">{personality.title}</CardTitle>
               </div>
             </div>
           </CardHeader>
           
           <CardContent>
             <p className="text-sm text-muted-foreground leading-relaxed">
-              {personality.descriptionZh}
+              {personality.description}
             </p>
           </CardContent>
         </Card>

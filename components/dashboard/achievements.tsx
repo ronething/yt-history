@@ -32,16 +32,13 @@ interface AchievementsProps {
 interface Achievement {
   id: string
   name: string
-  nameZh: string
   icon: any
   description: string
-  descriptionZh: string
   category: 'time' | 'quantity' | 'loyalty' | 'special'
   gradient: string
   unlocked: boolean
   progress: number
   requirement: string
-  requirementZh: string
 }
 
 export default function Achievements({ stats, advancedStats }: AchievementsProps) {
@@ -62,142 +59,112 @@ export default function Achievements({ stats, advancedStats }: AchievementsProps
     {
       id: 'movie-buff',
       name: 'Movie Buff',
-      nameZh: '🎬 电影爱好者',
       icon: Film,
       description: 'Watch 1000+ videos',
-      descriptionZh: '观看 1000+ 视频',
       category: 'quantity',
       gradient: 'from-yellow-500 to-amber-600',
       unlocked: stats.totalVideos >= 1000,
       progress: Math.min(100, (stats.totalVideos / 1000) * 100),
-      requirement: `${stats.totalVideos}/1000 videos`,
-      requirementZh: `${stats.totalVideos}/1000 个视频`
+      requirement: `${stats.totalVideos}/1000 videos`
     },
     {
       id: 'streak-master',
       name: 'Streak Master',
-      nameZh: '🔥 连击大师',
       icon: Flame,
       description: 'Watch for 30 consecutive days',
-      descriptionZh: '连续观看 30 天',
       category: 'time',
       gradient: 'from-red-500 to-orange-500',
       unlocked: advancedStats.longestStreak >= 30,
       progress: Math.min(100, (advancedStats.longestStreak / 30) * 100),
-      requirement: `${advancedStats.longestStreak}/30 days`,
-      requirementZh: `${advancedStats.longestStreak}/30 天`
+      requirement: `${advancedStats.longestStreak}/30 days`
     },
     {
       id: 'night-owl',
       name: 'Night Owl',
-      nameZh: '🌙 夜猫子',
       icon: Moon,
       description: '50%+ late night viewing',
-      descriptionZh: '50%+ 深夜观看',
       category: 'time',
       gradient: 'from-blue-500 to-indigo-600',
       unlocked: advancedStats.nightOwlScore >= 50,
       progress: Math.min(100, (advancedStats.nightOwlScore / 50) * 100),
-      requirement: `${advancedStats.nightOwlScore}/50%`,
-      requirementZh: `${advancedStats.nightOwlScore}/50%`
+      requirement: `${advancedStats.nightOwlScore}/50%`
     },
     {
       id: 'early-bird',
       name: 'Early Bird',
-      nameZh: '🌅 早起鸟',
       icon: Sun,
       description: '30%+ morning viewing',
-      descriptionZh: '30%+ 早晨观看',
       category: 'time',
       gradient: 'from-orange-500 to-yellow-500',
       unlocked: advancedStats.earlyBirdScore >= 30,
       progress: Math.min(100, (advancedStats.earlyBirdScore / 30) * 100),
-      requirement: `${advancedStats.earlyBirdScore}/30%`,
-      requirementZh: `${advancedStats.earlyBirdScore}/30%`
+      requirement: `${advancedStats.earlyBirdScore}/30%`
     },
     {
       id: 'loyal-fan',
       name: 'Loyal Fan',
-      nameZh: '💎 忠诚粉丝',
       icon: Heart,
       description: 'Top channel > 30%',
-      descriptionZh: 'Top 频道 > 30%',
       category: 'loyalty',
       gradient: 'from-purple-500 to-pink-500',
       unlocked: advancedStats.topChannelPercentage >= 30,
       progress: Math.min(100, (advancedStats.topChannelPercentage / 30) * 100),
-      requirement: `${advancedStats.topChannelPercentage}/30%`,
-      requirementZh: `${advancedStats.topChannelPercentage}/30%`
+      requirement: `${advancedStats.topChannelPercentage}/30%`
     },
     {
       id: 'content-explorer',
       name: 'Content Explorer',
-      nameZh: '🌈 内容探索者',
       icon: Compass,
       description: 'Watch 50+ different channels',
-      descriptionZh: '观看 50+ 不同频道',
       category: 'loyalty',
       gradient: 'from-teal-500 to-cyan-500',
       unlocked: stats.uniqueChannels >= 50,
       progress: Math.min(100, (stats.uniqueChannels / 50) * 100),
-      requirement: `${stats.uniqueChannels}/50 channels`,
-      requirementZh: `${stats.uniqueChannels}/50 个频道`
+      requirement: `${stats.uniqueChannels}/50 channels`
     },
     {
       id: 'weekend-warrior',
       name: 'Weekend Warrior',
-      nameZh: '🚀 周末战士',
       icon: Rocket,
       description: 'Weekend viewing 2x weekday',
-      descriptionZh: '周末观看是工作日的 2 倍',
       category: 'special',
       gradient: 'from-green-500 to-emerald-500',
       unlocked: advancedStats.weekendWarrior,
       progress: advancedStats.weekendWarrior ? 100 : 50,
-      requirement: advancedStats.weekendWarrior ? 'Unlocked!' : 'Not yet',
-      requirementZh: advancedStats.weekendWarrior ? '已解锁！' : '未达成'
+      requirement: advancedStats.weekendWarrior ? 'Unlocked!' : 'Not yet'
     },
     {
       id: 'marathon-runner',
       name: 'Marathon Runner',
-      nameZh: '⚡ 马拉松选手',
       icon: Zap,
       description: 'Watch 50+ videos in a day',
-      descriptionZh: '单日观看 50+ 视频',
       category: 'quantity',
       gradient: 'from-yellow-400 to-orange-500',
       unlocked: advancedStats.maxDailyViews >= 50,
       progress: Math.min(100, (advancedStats.maxDailyViews / 50) * 100),
-      requirement: `${advancedStats.maxDailyViews}/50 videos`,
-      requirementZh: `${advancedStats.maxDailyViews}/50 个视频`
+      requirement: `${advancedStats.maxDailyViews}/50 videos`
     },
     {
       id: 'veteran',
       name: 'Veteran',
-      nameZh: '🎯 元老级用户',
       icon: Target,
       description: '3+ years of history',
-      descriptionZh: '历史记录 3 年+',
       category: 'special',
       gradient: 'from-gray-400 to-gray-600',
       unlocked: getYearsOfHistory() >= 3,
       progress: Math.min(100, (getYearsOfHistory() / 3) * 100),
-      requirement: `${getYearsOfHistory().toFixed(1)}/3 years`,
-      requirementZh: `${getYearsOfHistory().toFixed(1)}/3 年`
+      requirement: `${getYearsOfHistory().toFixed(1)}/3 years`
     },
     {
       id: 'speed-demon',
       name: 'Speed Demon',
-      nameZh: '💨 速度恶魔',
       icon: Zap,
       description: '20+ videos per day average',
-      descriptionZh: '日均 20+ 视频',
       category: 'quantity',
       gradient: 'from-red-400 to-pink-500',
       unlocked: advancedStats.dailyAverage >= 20,
       progress: Math.min(100, (advancedStats.dailyAverage / 20) * 100),
-      requirement: `${advancedStats.dailyAverage}/20 per day`,
-      requirementZh: `${advancedStats.dailyAverage}/20 每天`
+      requirement: `${advancedStats.dailyAverage}/20 per day`
     }
   ]
 
@@ -209,11 +176,11 @@ export default function Achievements({ stats, advancedStats }: AchievementsProps
   const totalCount = achievements.length
 
   const categories = [
-    { id: 'all' as const, name: 'All', nameZh: '全部', count: totalCount },
-    { id: 'time' as const, name: 'Time', nameZh: '时间', count: achievements.filter(a => a.category === 'time').length },
-    { id: 'quantity' as const, name: 'Quantity', nameZh: '数量', count: achievements.filter(a => a.category === 'quantity').length },
-    { id: 'loyalty' as const, name: 'Loyalty', nameZh: '忠诚', count: achievements.filter(a => a.category === 'loyalty').length },
-    { id: 'special' as const, name: 'Special', nameZh: '特殊', count: achievements.filter(a => a.category === 'special').length }
+    { id: 'all' as const, name: 'All', count: totalCount },
+    { id: 'time' as const, name: 'Time', count: achievements.filter(a => a.category === 'time').length },
+    { id: 'quantity' as const, name: 'Quantity', count: achievements.filter(a => a.category === 'quantity').length },
+    { id: 'loyalty' as const, name: 'Loyalty', count: achievements.filter(a => a.category === 'loyalty').length },
+    { id: 'special' as const, name: 'Special', count: achievements.filter(a => a.category === 'special').length }
   ]
 
   return (
@@ -243,7 +210,7 @@ export default function Achievements({ stats, advancedStats }: AchievementsProps
               }`}
               onClick={() => setSelectedCategory(category.id)}
             >
-              {category.nameZh} ({category.count})
+              {category.name} ({category.count})
             </Badge>
           ))}
         </div>
@@ -277,10 +244,10 @@ export default function Achievements({ stats, advancedStats }: AchievementsProps
                         
                         <div className="space-y-1">
                           <h3 className="font-semibold text-sm">
-                            {achievement.nameZh}
+                            {achievement.name}
                           </h3>
                           <p className="text-xs text-muted-foreground">
-                            {achievement.descriptionZh}
+                            {achievement.description}
                           </p>
                         </div>
 
@@ -288,7 +255,7 @@ export default function Achievements({ stats, advancedStats }: AchievementsProps
                           <div className="w-full space-y-1">
                             <Progress value={achievement.progress} className="h-1.5" />
                             <p className="text-xs text-muted-foreground">
-                              {achievement.requirementZh}
+                              {achievement.requirement}
                             </p>
                           </div>
                         )}
