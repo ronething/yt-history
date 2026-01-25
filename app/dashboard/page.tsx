@@ -13,6 +13,10 @@ import ViewingTimeChart from "@/components/dashboard/viewing-time-chart"
 import ChannelDistributionChart from "@/components/dashboard/channel-distribution-chart"
 import StatsOverview from "@/components/dashboard/stats-overview"
 import SocialShare from "@/components/dashboard/social-share"
+import DonationBanner from "@/components/dashboard/donation-banner"
+import PersonalityInsights from "@/components/dashboard/personality-insights"
+import FunFacts from "@/components/dashboard/fun-facts"
+import Achievements from "@/components/dashboard/achievements"
 
 // Define interfaces for the processed data
 interface Stats {
@@ -52,6 +56,7 @@ export default function DashboardPage() {
   const [hourlyViews, setHourlyViews] = useState<HourlyView[]>([])
   const [topVideos, setTopVideos] = useState<TopVideo[]>([])
   const [channelCounts, setChannelCounts] = useState<ChannelCount[]>([])
+  const [advancedStats, setAdvancedStats] = useState<any | null>(null)
   const [isLoading, setIsLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
 
@@ -63,6 +68,7 @@ export default function DashboardPage() {
       const hourlyViewsJson = sessionStorage.getItem("youtubeHistoryHourlyViews")
       const topVideosJson = sessionStorage.getItem("youtubeHistoryTopVideos")
       const channelsJson = sessionStorage.getItem("youtubeHistoryChannels")
+      const advancedStatsJson = sessionStorage.getItem("youtubeHistoryAdvancedStats")
 
       if (!statsJson) {
         setError("No data found. Please upload your YouTube history file.")
@@ -75,6 +81,7 @@ export default function DashboardPage() {
       setHourlyViews(hourlyViewsJson ? JSON.parse(hourlyViewsJson) : [])
       setTopVideos(topVideosJson ? JSON.parse(topVideosJson) : [])
       setChannelCounts(channelsJson ? JSON.parse(channelsJson) : [])
+      setAdvancedStats(advancedStatsJson ? JSON.parse(advancedStatsJson) : null)
       setIsLoading(false)
     } catch (err) {
       console.error("Error loading data:", err)
@@ -159,13 +166,45 @@ export default function DashboardPage() {
       
       <main className="flex-1 py-8 px-4 sm:px-6 lg:px-8">
         <div className="container mx-auto space-y-8">
-          {/* Stats Overview */}
+          {/* Donation Banner */}
           <section className="animate-fade-in">
+            <DonationBanner />
+          </section>
+
+          {/* Stats Overview */}
+          <section className="animate-fade-in stagger-1">
             <StatsOverview stats={stats} />
           </section>
 
+          {/* Personality Insights */}
+          {advancedStats && (
+            <section className="animate-fade-in stagger-2">
+              <PersonalityInsights advancedStats={advancedStats} />
+            </section>
+          )}
+
+          {/* Fun Facts */}
+          {advancedStats && (
+            <section className="animate-fade-in stagger-3">
+              <FunFacts 
+                advancedStats={advancedStats} 
+                topChannelName={channelCounts[0]?.name}
+              />
+            </section>
+          )}
+
+          {/* Achievements */}
+          {advancedStats && (
+            <section className="animate-fade-in stagger-4">
+              <Achievements 
+                stats={stats}
+                advancedStats={advancedStats}
+              />
+            </section>
+          )}
+
           {/* Charts */}
-          <section className="animate-fade-in stagger-2">
+          <section className="animate-fade-in stagger-5">
             <Tabs defaultValue="daily-views" className="space-y-6">
               <TabsList className="grid w-full grid-cols-4 h-auto p-1 bg-muted/50 rounded-xl">
                 <TabsTrigger 
@@ -289,7 +328,7 @@ export default function DashboardPage() {
           </section>
 
           {/* Social Share */}
-          <section className="animate-fade-in stagger-3">
+          <section className="animate-fade-in stagger-6">
             <Card className="border-0 shadow-lg bg-card/50 backdrop-blur">
               <CardContent className="pt-6">
                 <SocialShare />
