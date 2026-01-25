@@ -90,11 +90,6 @@ export default function SocialShare() {
                 Support on Ko-fi
               </a>
             </Button>
-            
-            {/* Social Proof */}
-            <p className="text-xs text-center text-muted-foreground">
-              ❤️ Join 127+ supporters who made this possible
-            </p>
           </div>
         </div>
       </div>
