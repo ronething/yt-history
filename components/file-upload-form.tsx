@@ -369,6 +369,25 @@ export default function FileUploadForm() {
         .sort((a, b) => b.count - a.count)
     )
 
+    const timeBounds = processedVideos.reduce(
+      (acc, video) => {
+        if (!video.time) return acc
+        const timestamp = new Date(video.time).getTime()
+        if (Number.isNaN(timestamp)) return acc
+        if (!acc.first || timestamp < acc.first.timestamp) {
+          acc.first = { video, timestamp }
+        }
+        return acc
+      },
+      {
+        first: null,
+      } as {
+        first: { video: ProcessedVideoData; timestamp: number } | null
+      }
+    )
+
+    const firstVideoSource = timeBounds.first?.video ?? processedVideos[processedVideos.length - 1]
+
     // 6. Find peak hour
     const peakHourData = hourCounts.reduce((max, curr) => 
       curr.count > max.count ? curr : max
@@ -419,16 +438,10 @@ export default function FileUploadForm() {
       
       // Time travel
       firstVideo: {
-        title: processedVideos[0]?.title || 'Unknown',
-        channel: processedVideos[0]?.channel,
-        date: processedVideos[0]?.time || '',
-        url: processedVideos[0]?.id,
-      },
-      lastVideo: {
-        title: processedVideos[processedVideos.length - 1]?.title || 'Unknown',
-        channel: processedVideos[processedVideos.length - 1]?.channel,
-        date: processedVideos[processedVideos.length - 1]?.time || '',
-        url: processedVideos[processedVideos.length - 1]?.id,
+        title: firstVideoSource?.title || 'Unknown',
+        channel: firstVideoSource?.channel,
+        date: firstVideoSource?.time || '',
+        url: firstVideoSource?.id,
       },
       
       // Channel loyalty

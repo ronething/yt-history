@@ -83,7 +83,7 @@ export default function DonationBanner() {
             className="bg-gradient-to-r from-orange-500 to-pink-500 hover:from-orange-600 hover:to-pink-600 text-white shadow-lg hover:shadow-xl transition-all hover:scale-105 gap-2"
           >
             <Heart className="w-4 h-4 fill-current" />
-            <span className="hidden sm:inline">Support $3</span>
+            <span className="hidden sm:inline">Support</span>
             <span className="sm:hidden">Support</span>
           </Button>
           
