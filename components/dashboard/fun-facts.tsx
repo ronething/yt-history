@@ -1,6 +1,6 @@
 "use client"
 
-import { Flame, Calendar, Trophy, Video, Heart, Zap } from "lucide-react"
+import { Flame, Calendar, Trophy, Video, Heart, Zap, LucideIcon } from "lucide-react"
 import { Card, CardContent } from "@/components/ui/card"
 
 interface AdvancedStats {
@@ -13,6 +13,7 @@ interface AdvancedStats {
     title: string
     channel?: string
     date: string
+    url?: string
   }
   topChannelPercentage: number
   weekendWarrior: boolean
@@ -21,6 +22,16 @@ interface AdvancedStats {
 interface FunFactsProps {
   advancedStats: AdvancedStats
   topChannelName?: string
+}
+
+interface Fact {
+  icon: LucideIcon
+  gradient: string
+  title: string
+  value: string
+  description: string
+  bgPattern: string
+  url?: string
 }
 
 export default function FunFacts({ advancedStats, topChannelName }: FunFactsProps) {
@@ -79,11 +90,10 @@ export default function FunFacts({ advancedStats, topChannelName }: FunFactsProp
       icon: Video,
       gradient: "from-purple-500 to-pink-500",
       title: "First Memory",
-      value: advancedStats.firstVideo.title.length > 40 
-        ? advancedStats.firstVideo.title.substring(0, 40) + '...' 
-        : advancedStats.firstVideo.title,
+      value: advancedStats.firstVideo.title,
       description: formatDate(advancedStats.firstVideo.date),
-      bgPattern: "🎬"
+      bgPattern: "🎬",
+      url: advancedStats.firstVideo.url
     },
     {
       icon: Heart,
@@ -122,16 +132,15 @@ export default function FunFacts({ advancedStats, topChannelName }: FunFactsProp
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
         {facts.map((fact, index) => {
           const Icon = fact.icon
-          return (
-            <Card 
-              key={index}
-              className={`relative overflow-hidden border-2 hover:border-primary/50 transition-all hover:scale-[1.02] group animate-fade-in stagger-${index + 1}`}
-            >
+          const cardClassName = `relative overflow-hidden border-2 hover:border-primary/50 transition-all hover:scale-[1.02] group animate-fade-in stagger-${index + 1}`
+
+          const cardContent = (
+            <>
               <div className={`absolute top-0 right-0 w-24 h-24 bg-gradient-to-br ${fact.gradient} opacity-5 rounded-full blur-xl`} />
               <div className="absolute top-2 right-2 text-4xl opacity-5 group-hover:opacity-10 transition-opacity">
                 {fact.bgPattern}
               </div>
-              
+
               <CardContent className="p-6">
                 <div className="flex items-start gap-3 mb-3">
                   <div className={`p-2.5 rounded-lg bg-gradient-to-br ${fact.gradient} shrink-0`}>
@@ -150,6 +159,28 @@ export default function FunFacts({ advancedStats, topChannelName }: FunFactsProp
                   {fact.description}
                 </p>
               </CardContent>
+            </>
+          )
+
+          if (fact.url) {
+            return (
+              <a
+                key={index}
+                href={fact.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="block"
+              >
+                <Card className={`${cardClassName} cursor-pointer`}>
+                  {cardContent}
+                </Card>
+              </a>
+            )
+          }
+
+          return (
+            <Card key={index} className={cardClassName}>
+              {cardContent}
             </Card>
           )
         })}
