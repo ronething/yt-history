@@ -94,6 +94,160 @@ export default function FileUploadForm() {
 
   // Process the raw data into aggregated statistics to reduce storage size
   const processData = (rawData: any[]): AggregatedData => {
+    // ===== Helper Functions =====
+    
+    function calculateStreak(dailyViews: { date: string; count: number }[]): { longest: number; current: number } {
+      if (dailyViews.length === 0) return { longest: 0, current: 0 }
+      
+      let longestStreak = 1
+      let currentStreak = 1
+      let maxStreak = 1
+      
+      const today = new Date().toISOString().split('T')[0]
+      let isCurrentActive = false
+      
+      for (let i = 1; i < dailyViews.length; i++) {
+        const prevDate = new Date(dailyViews[i - 1].date)
+        const currDate = new Date(dailyViews[i].date)
+        const diffDays = Math.round((currDate.getTime() - prevDate.getTime()) / (1000 * 60 * 60 * 24))
+        
+        if (diffDays === 1) {
+          currentStreak++
+          maxStreak = Math.max(maxStreak, currentStreak)
+        } else {
+          currentStreak = 1
+        }
+        
+        // Check if it includes today or recent
+        if (dailyViews[i].date === today || i === dailyViews.length - 1) {
+          const daysSinceLastView = Math.round((new Date().getTime() - currDate.getTime()) / (1000 * 60 * 60 * 24))
+          if (daysSinceLastView <= 1) {
+            isCurrentActive = true
+            longestStreak = currentStreak
+          }
+        }
+      }
+      
+      return {
+        longest: maxStreak,
+        current: isCurrentActive ? longestStreak : 0
+      }
+    }
+    
+    function calculatePersonalityScores(hourlyViews: { hour: number; count: number }[]): {
+      nightOwl: number
+      earlyBird: number
+      midday: number
+    } {
+      const totalViews = hourlyViews.reduce((sum, h) => sum + h.count, 0)
+      if (totalViews === 0) return { nightOwl: 0, earlyBird: 0, midday: 0 }
+      
+      // Night owl: 22:00-6:00
+      const nightViews = hourlyViews
+        .filter(h => h.hour >= 22 || h.hour < 6)
+        .reduce((sum, h) => sum + h.count, 0)
+      
+      // Early bird: 5:00-9:00
+      const morningViews = hourlyViews
+        .filter(h => h.hour >= 5 && h.hour < 9)
+        .reduce((sum, h) => sum + h.count, 0)
+      
+      // Midday: 12:00-14:00
+      const middayViews = hourlyViews
+        .filter(h => h.hour >= 12 && h.hour < 14)
+        .reduce((sum, h) => sum + h.count, 0)
+      
+      return {
+        nightOwl: Math.round((nightViews / totalViews) * 100),
+        earlyBird: Math.round((morningViews / totalViews) * 100),
+        midday: Math.round((middayViews / totalViews) * 100)
+      }
+    }
+    
+    function calculateFavoriteDay(processedVideos: ProcessedVideoData[]): {
+      day: string
+      percentage: number
+    } {
+      const dayNames = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
+      const dayCounts = Array(7).fill(0)
+      
+      processedVideos.forEach(video => {
+        if (video.time) {
+          const date = new Date(video.time)
+          if (!isNaN(date.getTime())) {
+            dayCounts[date.getDay()]++
+          }
+        }
+      })
+      
+      const maxCount = Math.max(...dayCounts)
+      const maxIndex = dayCounts.indexOf(maxCount)
+      const totalCount = dayCounts.reduce((a, b) => a + b, 0)
+      
+      return {
+        day: dayNames[maxIndex],
+        percentage: totalCount > 0 ? Math.round((maxCount / totalCount) * 100) : 0
+      }
+    }
+    
+    function calculateWeekdayWeekendStats(processedVideos: ProcessedVideoData[]): {
+      weekdayAvg: number
+      weekendAvg: number
+      weekendRatio: number
+    } {
+      const weekdayDays = new Set<string>()
+      const weekendDays = new Set<string>()
+      let weekdayCount = 0
+      let weekendCount = 0
+      
+      processedVideos.forEach(video => {
+        if (video.time) {
+          const date = new Date(video.time)
+          if (!isNaN(date.getTime())) {
+            const dayOfWeek = date.getDay()
+            const dateStr = date.toISOString().split('T')[0]
+            
+            if (dayOfWeek === 0 || dayOfWeek === 6) {
+              weekendDays.add(dateStr)
+              weekendCount++
+            } else {
+              weekdayDays.add(dateStr)
+              weekdayCount++
+            }
+          }
+        }
+      })
+      
+      const weekdayAvg = weekdayDays.size > 0 ? weekdayCount / weekdayDays.size : 0
+      const weekendAvg = weekendDays.size > 0 ? weekendCount / weekendDays.size : 0
+      const weekendRatio = weekdayAvg > 0 ? weekendAvg / weekdayAvg : 0
+      
+      return {
+        weekdayAvg: Math.round(weekdayAvg * 10) / 10,
+        weekendAvg: Math.round(weekendAvg * 10) / 10,
+        weekendRatio: Math.round(weekendRatio * 100) / 100
+      }
+    }
+    
+    function calculateChannelDiversity(channelCounts: { name: string; count: number }[]): number {
+      const totalViews = channelCounts.reduce((sum, c) => sum + c.count, 0)
+      if (totalViews === 0) return 0
+      
+      let entropy = 0
+      channelCounts.forEach(channel => {
+        const p = channel.count / totalViews
+        if (p > 0) {
+          entropy -= p * Math.log2(p)
+        }
+      })
+      
+      // Normalize to 0-1, assuming max entropy is log2(100) ≈ 6.64
+      const maxEntropy = 6.64
+      return Math.round(Math.min(1, entropy / maxEntropy) * 100) / 100
+    }
+    
+    // ===== Original Data Processing =====
+    
     // Extract only the necessary fields from each video
     const processedVideos: ProcessedVideoData[] = rawData
       .filter((item) => item && typeof item === "object" && (item.title || item.titleUrl))
@@ -188,6 +342,135 @@ export default function FileUploadForm() {
       oldestDate = new Date(Math.min(...validDates.map((date) => date.getTime())))
       newestDate = new Date(Math.max(...validDates.map((date) => date.getTime())))
       daysDifference = Math.max(1, Math.ceil((newestDate.getTime() - oldestDate.getTime()) / (1000 * 60 * 60 * 24)))
+    }
+
+    // ============ Advanced Statistics Calculation ============
+
+    // 1. Calculate streak
+    const streakInfo = calculateStreak(
+      Array.from(dateMap.entries())
+        .map(([date, count]) => ({ date, count }))
+        .sort((a, b) => a.date.localeCompare(b.date))
+    )
+
+    // 2. Calculate personality scores
+    const personalityScores = calculatePersonalityScores(hourCounts)
+
+    // 3. Calculate favorite day
+    const favoriteDay = calculateFavoriteDay(processedVideos)
+
+    // 4. Calculate weekday vs weekend stats
+    const weekStats = calculateWeekdayWeekendStats(processedVideos)
+
+    // 5. Calculate channel diversity
+    const channelDiversityScore = calculateChannelDiversity(
+      Array.from(channelMap.entries())
+        .map(([name, count]) => ({ name, count }))
+        .sort((a, b) => b.count - a.count)
+    )
+
+    const timeBounds = processedVideos.reduce(
+      (acc, video) => {
+        if (!video.time) return acc
+        const timestamp = new Date(video.time).getTime()
+        if (Number.isNaN(timestamp)) return acc
+        if (!acc.first || timestamp < acc.first.timestamp) {
+          acc.first = { video, timestamp }
+        }
+        return acc
+      },
+      {
+        first: null,
+      } as {
+        first: { video: ProcessedVideoData; timestamp: number } | null
+      }
+    )
+
+    const firstVideoSource = timeBounds.first?.video ?? processedVideos[processedVideos.length - 1]
+
+    // 6. Find peak hour
+    const peakHourData = hourCounts.reduce((max, curr) => 
+      curr.count > max.count ? curr : max
+    )
+
+    // 7. Find max daily views
+    const maxDailyEntry = Array.from(dateMap.entries()).reduce((max, curr) => 
+      curr[1] > max[1] ? curr : max, ['', 0]
+    )
+
+    // 8. Time period statistics
+    const morningCount = hourCounts
+      .filter(h => h.hour >= 5 && h.hour < 12)
+      .reduce((s, h) => s + h.count, 0)
+    const afternoonCount = hourCounts
+      .filter(h => h.hour >= 12 && h.hour < 18)
+      .reduce((s, h) => s + h.count, 0)
+    const eveningCount = hourCounts
+      .filter(h => h.hour >= 18 && h.hour < 22)
+      .reduce((s, h) => s + h.count, 0)
+    const nightCount = hourCounts
+      .filter(h => h.hour >= 22 || h.hour < 5)
+      .reduce((s, h) => s + h.count, 0)
+
+    // 9. Build advanced stats object
+    const advancedStats = {
+      // Time personality
+      peakHour: peakHourData.hour,
+      nightOwlScore: personalityScores.nightOwl,
+      earlyBirdScore: personalityScores.earlyBird,
+      middayScore: personalityScores.midday,
+      
+      // Viewing intensity
+      dailyAverage: Math.round((processedVideos.length / daysDifference) * 10) / 10,
+      weekendWarrior: weekStats.weekendRatio > 1.5,
+      
+      // Streak statistics
+      longestStreak: streakInfo.longest,
+      currentStreak: streakInfo.current,
+      
+      // Extreme statistics
+      maxDailyViews: maxDailyEntry[1],
+      maxDailyDate: maxDailyEntry[0],
+      
+      // Time preference
+      favoriteDay: favoriteDay.day,
+      favoriteDayPercentage: favoriteDay.percentage,
+      
+      // Time travel
+      firstVideo: {
+        title: firstVideoSource?.title || 'Unknown',
+        channel: firstVideoSource?.channel,
+        date: firstVideoSource?.time || '',
+        url: firstVideoSource?.id,
+      },
+      
+      // Channel loyalty
+      topChannelPercentage: channelCounts[0] 
+        ? Math.round((channelCounts[0].count / processedVideos.length) * 100) 
+        : 0,
+      channelDiversity: channelDiversityScore,
+      loyalChannels: channelCounts
+        .filter(c => (c.count / processedVideos.length) > 0.1)
+        .map(c => c.name)
+        .slice(0, 5),
+      
+      // Weekday vs weekend
+      weekdayAvg: weekStats.weekdayAvg,
+      weekendAvg: weekStats.weekendAvg,
+      weekendRatio: weekStats.weekendRatio,
+      
+      // Time period distribution
+      morningCount,
+      afternoonCount,
+      eveningCount,
+      nightCount,
+    }
+
+    // 10. Store to sessionStorage
+    try {
+      sessionStorage.setItem('youtubeHistoryAdvancedStats', JSON.stringify(advancedStats))
+    } catch (e) {
+      console.error('Failed to save advanced stats:', e)
     }
 
     // Return aggregated data
