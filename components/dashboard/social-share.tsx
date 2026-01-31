@@ -12,7 +12,7 @@ import {
 import { Coffee, Heart } from "lucide-react"
 import { Button } from "@/components/ui/button"
 
-const SHARE_URL = "https://youtubestats.forgetimer.com"
+const SHARE_URL = "https://playbackstats.com"
 const SHARE_TITLE = "Check out this awesome YouTube History Visualizer! Analyze your YouTube watching habits with beautiful charts and insights."
 const KOFI_URL = "https://ko-fi.com/ashing"
 

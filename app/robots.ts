@@ -6,6 +6,6 @@ export default function robots(): MetadataRoute.Robots {
       userAgent: '*',
       allow: '/',
     },
-    sitemap: 'https://youtubestats.forgetimer.com/sitemap.xml',
+    sitemap: 'https://playbackstats.com/sitemap.xml',
   }
 } 

@@ -11,7 +11,7 @@ export const metadata: Metadata = {
   description: "Upload your YouTube watch history and get personalized insights into your viewing patterns. No login required, your data never leaves your browser.",
   openGraph: {
     type: "website",
-    url: "https://youtubestats.forgetimer.com/",
+    url: "https://playbackstats.com/",
     title: "YouTube History Visualizer | Analyze Your Viewing Habits",
     description: "Upload your YouTube watch history and get personalized insights into your viewing patterns. No login required, your data never leaves your browser.",
     siteName: "YouTube History Visualizer",
@@ -22,7 +22,7 @@ export const metadata: Metadata = {
     description: "Upload your YouTube watch history and get personalized insights into your viewing patterns. No login required, your data never leaves your browser.",
   },
   alternates: {
-    canonical: "https://youtubestats.forgetimer.com/",
+    canonical: "https://playbackstats.com/",
   },
   robots: {
     index: true,

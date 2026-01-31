@@ -1,7 +1,7 @@
 import { MetadataRoute } from 'next'
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const baseUrl = 'https://youtubestats.forgetimer.com'
+  const baseUrl = 'https://playbackstats.com'
   const currentDate = new Date().toISOString()
   
   return [
