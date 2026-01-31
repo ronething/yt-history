@@ -10,14 +10,14 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Privacy Policy | YouTube History Visualizer",
     description: "Privacy policy and data handling practices for the YouTube History Visualizer tool.",
-    url: "https://youtubestats.forgetimer.com/privacy",
+    url: "https://playbackstats.com/privacy",
   },
   twitter: {
     title: "Privacy Policy | YouTube History Visualizer",
     description: "Privacy policy and data handling practices for the YouTube History Visualizer tool.",
   },
   alternates: {
-    canonical: "https://youtubestats.forgetimer.com/privacy",
+    canonical: "https://playbackstats.com/privacy",
   },
 }
 
@@ -120,7 +120,7 @@ export default function PrivacyPolicy() {
               <h2 className="text-2xl font-bold">Contact Us</h2>
               <p>
                 If you have any questions about this Privacy Policy, please contact us at:
-                support@forgetimer.com
+                support@playbackstats.com
               </p>
             </section>
           </div>

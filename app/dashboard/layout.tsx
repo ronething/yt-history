@@ -6,14 +6,14 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Dashboard | YouTube History Visualizer",
     description: "View insights and analytics from your YouTube watch history data.",
-    url: "https://youtubestats.forgetimer.com/dashboard",
+    url: "https://playbackstats.com/dashboard",
   },
   twitter: {
     title: "Dashboard | YouTube History Visualizer",
     description: "View insights and analytics from your YouTube watch history data.",
   },
   alternates: {
-    canonical: "https://youtubestats.forgetimer.com/dashboard",
+    canonical: "https://playbackstats.com/dashboard",
   },
 }
 

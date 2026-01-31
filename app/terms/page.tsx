@@ -10,14 +10,14 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Terms of Service | YouTube History Visualizer",
     description: "Terms of service and usage conditions for the YouTube History Visualizer tool.",
-    url: "https://youtubestats.forgetimer.com/terms",
+    url: "https://playbackstats.com/terms",
   },
   twitter: {
     title: "Terms of Service | YouTube History Visualizer",
     description: "Terms of service and usage conditions for the YouTube History Visualizer tool.",
   },
   alternates: {
-    canonical: "https://youtubestats.forgetimer.com/terms",
+    canonical: "https://playbackstats.com/terms",
   },
 }
 
@@ -163,7 +163,7 @@ export default function TermsOfService() {
               <h2 className="text-2xl font-bold">10. Contact Us</h2>
               <p>
                 If you have any questions about these Terms, please contact us at:
-                support@forgetimer.com
+                support@playbackstats.com
               </p>
             </section>
           </div>
