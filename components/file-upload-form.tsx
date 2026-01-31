@@ -553,23 +553,22 @@ export default function FileUploadForm() {
             sessionStorage.setItem("youtubeHistoryHourlyViews", JSON.stringify(processedData.hourlyViews))
             sessionStorage.setItem("youtubeHistoryTopVideos", JSON.stringify(processedData.topVideos))
             sessionStorage.setItem("youtubeHistoryChannels", JSON.stringify(processedData.channelCounts))
-            setProgress(95)
-            setProgressStage("Almost there...")
           } catch (storageError) {
             console.error("Storage error:", storageError)
             throw new Error("Failed to store processed data. The file may be too large even after processing.")
           }
 
-          // Complete the progress and navigate
-          setProgress(100)
-          setProgressStage("Ready!")
+          setProgress(95)
+          setProgressStage("Opening dashboard...")
+
           setTimeout(() => {
             router.push("/dashboard")
-          }, 600)
+          }, 0)
         } catch (error: any) {
           console.error("Processing error:", error)
           setError(
-            error.message || "Failed to process file. Please ensure it's a valid YouTube watch history JSON file.",
+            error.message ||
+              "Failed to process file. Please make sure it's a valid YouTube watch history JSON file."
           )
           setIsProcessing(false)
         }
