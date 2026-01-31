@@ -41,7 +41,7 @@ export default function MigrationBanner() {
         <button
           type="button"
           onClick={handleClose}
-          className="absolute right-3 top-1/2 flex h-6 w-6 -translate-y-1/2 items-center justify-center rounded-full border border-amber-300 text-[11px] font-semibold transition hover:bg-amber-100"
+          className="absolute right-3 top-1/2 flex h-6 w-6 -translate-y-1/2 items-center justify-center rounded-full border border-amber-300 text-[11px] font-semibold transition hover:bg-amber-100 sm:right-10"
           aria-label="Dismiss migration notice"
         >
           X
