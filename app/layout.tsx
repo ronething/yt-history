@@ -1,7 +1,6 @@
 import type { Metadata } from 'next'
 import './globals.css'
 import Script from 'next/script'
-import MigrationBanner from '@/components/migration-banner'
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://playbackstats.com'),
@@ -27,7 +26,6 @@ export default function RootLayout({
         </Script>
       </head>
       <body>
-        <MigrationBanner />
         {children}
       </body>
     </html>
