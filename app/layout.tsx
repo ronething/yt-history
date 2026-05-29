@@ -17,6 +17,12 @@ export default function RootLayout({
     <html lang="en">
       <head>
         <Script
+          id="google-adsense"
+          async
+          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3696025303089929"
+          crossOrigin="anonymous"
+        />
+        <Script
           defer
           data-domain="playbackstats.com"
           src="https://plausible.vibecodinghub.org/js/script.file-downloads.outbound-links.js"
