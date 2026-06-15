@@ -1,7 +1,7 @@
 import Link from "next/link"
 import { ArrowUpRight, Music2 } from "lucide-react"
 
-const MUSIC_GENERATOR_URL = "https://music-generator.net/"
+const MUSIC_GENERATOR_URL = "https://music-generator.net/?utm_source=playbackstats&utm_medium=promo_banner&utm_campaign=yt_history"
 
 export default function PromoBanner() {
   return (
